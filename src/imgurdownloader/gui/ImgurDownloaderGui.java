@@ -5,6 +5,7 @@
  */
 package imgurdownloader.gui;
 
+import java.awt.Font;
 import java.awt.Rectangle;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -40,9 +41,13 @@ public class ImgurDownloaderGui extends JFrame{
         JLabel targetLabel = new JLabel("Download location:",JLabel.LEFT);
         targetField = new JTextField();
         selectTargetButton = new JButton("Select Folder");
-        goButton = new JButton("Go");
+        goButton = new JButton("Download Now");
+        Font f = new Font("Times New Roman",Font.PLAIN,72);
+        goButton.setFont(f);
         
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
         GroupLayout.SequentialGroup pGroup = layout.createSequentialGroup();
+        
         pGroup.addGroup(layout.createParallelGroup()
                 .addComponent(imgurLabel)
                 .addComponent(targetLabel));
@@ -51,7 +56,9 @@ public class ImgurDownloaderGui extends JFrame{
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(targetField)
                         .addComponent(selectTargetButton)));
-        
+        hGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+                .addGroup(pGroup)
+                .addComponent(goButton));
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
         vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
                 .addComponent(imgurLabel)
@@ -60,9 +67,9 @@ public class ImgurDownloaderGui extends JFrame{
                 .addComponent(targetLabel)
                 .addComponent(targetField)
                 .addComponent(selectTargetButton));
+        vGroup.addComponent(goButton);
         
-        
-        layout.setHorizontalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
         layout.setVerticalGroup(vGroup);
        
         targetField = new JTextField();
@@ -70,7 +77,9 @@ public class ImgurDownloaderGui extends JFrame{
 
         this.setVisible(true);
     }
-    
+    /*
+    For Testing
+    */
     public static void main(String[] args){
         ImgurDownloaderGui gui = new ImgurDownloaderGui();
     }
