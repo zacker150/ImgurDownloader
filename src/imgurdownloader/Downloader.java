@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package imgurdownloader;
 
 import java.io.File;
@@ -13,16 +8,20 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 /**
- *
- * @author zacke
+ * Downloader is a Runnable object that will download a single file from the 
+ * Internet
+ * @author Victor Zeng
  */
 public class Downloader implements Runnable {
     
     private URL url;
     private File target;
+    
     /**
-     * 
-    */
+     * Constructs a new Downloader
+     * @param url A URL pointing to the object to be downloaded
+     * @param target The file to store the downloaded object
+     */
     public Downloader(URL url, File target){
         this.url = url;
         this.target = target;
