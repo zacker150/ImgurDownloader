@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
  * Internet
  * @author Victor Zeng
  */
-public class Downloader implements Runnable {
+public class FileDownloader implements Runnable {
     
     private URL url;
     private File target;
@@ -22,7 +22,7 @@ public class Downloader implements Runnable {
      * @param url A URL pointing to the object to be downloaded
      * @param target The file to store the downloaded object
      */
-    public Downloader(URL url, File target){
+    public FileDownloader(URL url, File target){
         this.url = url;
         this.target = target;
     }
