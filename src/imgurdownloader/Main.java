@@ -81,7 +81,6 @@ public class Main {
                 }
             }
             input.close();
-            stream.close();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
