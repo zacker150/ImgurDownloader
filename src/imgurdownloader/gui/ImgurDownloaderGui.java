@@ -7,6 +7,10 @@ package imgurdownloader.gui;
 
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.nio.file.Path;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
@@ -20,6 +24,7 @@ public class ImgurDownloaderGui extends JFrame{
     private JTextField targetField;
     private JButton selectTargetButton;
     private JButton goButton;
+    private Path target;
     
     public ImgurDownloaderGui(){
         initComponents();
@@ -40,7 +45,9 @@ public class ImgurDownloaderGui extends JFrame{
         imgurLocationField = new JTextField(); 
         JLabel targetLabel = new JLabel("Download location:",JLabel.LEFT);
         targetField = new JTextField();
+        targetField.setEditable(false);
         selectTargetButton = new JButton("Select Folder");
+        selectTargetButton.addActionListener(new FileChooser());
         goButton = new JButton("Download Now");
         Font f = new Font("Times New Roman",Font.PLAIN,72);
         goButton.setFont(f);
@@ -71,11 +78,22 @@ public class ImgurDownloaderGui extends JFrame{
         
         layout.setHorizontalGroup(hGroup);
         layout.setVerticalGroup(vGroup);
-       
-        targetField = new JTextField();
-        targetField.setBounds(new Rectangle(500,75));
 
         this.setVisible(true);
+    }
+    
+    private class FileChooser implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Choose the target");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File f = chooser.getSelectedFile();
+                target = f.toPath();
+                targetField.setText(target.toString());
+                
+            }
+        }
     }
     /*
     For Testing
