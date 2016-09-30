@@ -29,6 +29,7 @@ public class FileDownloader implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("Downlaoding " + url.toString());
         try (InputStream in = url.openStream()){
             Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
