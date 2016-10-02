@@ -5,6 +5,7 @@
  */
 package imgurdownloader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -41,7 +42,9 @@ public class AlbumDownloader {
         if(match.matches()){
             this.albumID = match.group("imgurID");
         }
-        throw new IllegalArgumentException("That is not an imgur link");
+        else{
+            throw new IllegalArgumentException("That is not an imgur link: " + url);
+        }
     }
     
     private ArrayList<String> getImages(){
@@ -60,7 +63,7 @@ public class AlbumDownloader {
                 if(next.contains("class=\"post-image-container")){
                     Matcher m = IMG_REGEX.matcher(next);
                     m.find();
-                    System.out.println(next);
+                    //System.out.println(next);
                     String pic = "http://i.imgur.com/" + m.group("link") + ".jpg";
                     imgLinks.add(pic);
                 }
@@ -76,13 +79,25 @@ public class AlbumDownloader {
     
     public void downloadFiles(){
         ArrayList<String> images = getImages();
+        String s = target.toString();
         ExecutorService pool = Executors.newWorkStealingPool();
+        int x = 1;
         for(String img: images){
             try{
-                FileDownloader f = new FileDownloader(new URL(img),target.toFile());
+                String filename = x + ".jpg";
+                x++;
+                String path = s + "\\" + filename;
+                System.out.println(path);
+                File file = new File(path);
+                FileDownloader f = new FileDownloader(new URL(img),file);
                 pool.execute(f);
             } catch(MalformedURLException e){
             }
         }
+    }
+    
+    public static boolean isValidAlbumLink(String s){
+        Matcher m = IMGUR_REGEX.matcher(s);
+        return m.matches();
     }
 }
