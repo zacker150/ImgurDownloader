@@ -5,6 +5,7 @@
  */
 package imgurdownloader.gui;
 
+import imgurdownloader.AlbumDownloader;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -51,6 +52,7 @@ public class ImgurDownloaderGui extends JFrame{
         goButton = new JButton("Download Now");
         Font f = new Font("Times New Roman",Font.PLAIN,72);
         goButton.setFont(f);
+        goButton.addActionListener(new StartDownloadAction());
         
         GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
         GroupLayout.SequentialGroup pGroup = layout.createSequentialGroup();
@@ -95,8 +97,24 @@ public class ImgurDownloaderGui extends JFrame{
             }
         }
     }
+    
+    public class StartDownloadAction implements ActionListener{
+        
+        public void actionPerformed(ActionEvent e){
+            String url = imgurLocationField.getText();
+            if(AlbumDownloader.isValidAlbumLink(url)){
+                AlbumDownloader downloader = new AlbumDownloader(url,target);
+                downloader.downloadFiles();
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "That is not a valid imgur album", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    
     /*
-    For Testing
+    
     */
     public static void main(String[] args){
         ImgurDownloaderGui gui = new ImgurDownloaderGui();
