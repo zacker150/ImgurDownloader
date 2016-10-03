@@ -21,22 +21,34 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * A driver class which does the work of downloading the Imgur Album. Files will
+ * be named [number].[filename] when downloaded. 
  * @author zacke
  */
 public class AlbumDownloader {
+    //A regex to check the link is a valid album
     public static final Pattern IMGUR_REGEX = 
             Pattern.compile("(?<protocol>https?)\\:\\/\\/(www\\.)?(?:m\\.)?imgur\\.com/(a|gallery)/(?<imgurID>[a-zA-Z0-9]+)(#[0-9]+)?");
+    //A regex to identify images in the HTML
     public static final Pattern IMG_REGEX = Pattern.compile("id=\"(?<link>.+?)\"");
     
     private Path target;
     private String albumID;
     
+    /**
+     * Constructs a new AlbumDownloader
+     * @param url The url of the album to downlaod from
+     * @param target The directory to place the downloaded images in.
+     */
     public AlbumDownloader(String url,Path target){
         getAlbumID(url);
         this.target = target;
     }
     
+    /**
+     * Gets the albumID from the full link
+     * @param url The full link to the Imgur album
+     */
     private void getAlbumID(String url){
         Matcher match = IMGUR_REGEX.matcher(url);
         if(match.matches()){
@@ -46,7 +58,10 @@ public class AlbumDownloader {
             throw new IllegalArgumentException("That is not an imgur link: " + url);
         }
     }
-    
+    /**
+     * Retrieves an ArrayList containing all the files in the album
+     * @return 
+     */
     private ArrayList<String> getImages(){
         ArrayList<String> imgLinks = new ArrayList<>();
         String link = "http://imgur.com/a/" + albumID + "/layout/blog";
@@ -76,7 +91,9 @@ public class AlbumDownloader {
         }
         return imgLinks;
     }
-    
+    /**
+     * Starts downloading the album
+     */
     public void downloadFiles(){
         ArrayList<String> images = getImages();
         String s = target.toString();
@@ -95,7 +112,12 @@ public class AlbumDownloader {
             }
         }
     }
-    
+    /**
+     * Checks if a String is formatted as a link to a proper imgur album
+     * @param s The string to check
+     * @return true if the s is in the format of a link to an imgur album. false
+     * otherwise
+     */
     public static boolean isValidAlbumLink(String s){
         Matcher m = IMGUR_REGEX.matcher(s);
         return m.matches();

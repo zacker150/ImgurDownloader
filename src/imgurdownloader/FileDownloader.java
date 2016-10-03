@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 /**
- * Downloader is a Runnable object that will download a single file from the 
+ * Downloader is a Runnable that will download a single file from the 
  * Internet
  * @author Victor Zeng
  */
@@ -19,7 +19,7 @@ public class FileDownloader implements Runnable {
     
     /**
      * Constructs a new Downloader
-     * @param url A URL pointing to the object to be downloaded
+     * @param url A URL pointing to the file to be downloaded
      * @param target The file to store the downloaded object
      */
     public FileDownloader(URL url, File target){

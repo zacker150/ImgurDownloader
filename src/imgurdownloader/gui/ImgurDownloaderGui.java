@@ -37,23 +37,23 @@ public class ImgurDownloaderGui extends JFrame{
         this.setTitle("Imgur Album Downloader");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GroupLayout layout = new GroupLayout(this.getContentPane());
-        this.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);     
-        
         JLabel imgurLabel = new JLabel("Imgur Album URL:", JLabel.LEFT);  
         imgurLocationField = new JTextField(); 
         JLabel targetLabel = new JLabel("Download location:",JLabel.LEFT);
         targetField = new JTextField();
         targetField.setEditable(false);
         selectTargetButton = new JButton("Select Folder");
-        selectTargetButton.addActionListener(new FileChooser());
-        goButton = new JButton("Download Now");
+        selectTargetButton.addActionListener(new FileChooseButtonListener());
+        goButton = new JButton("Start Download");
         Font f = new Font("Times New Roman",Font.PLAIN,72);
         goButton.setFont(f);
-        goButton.addActionListener(new StartDownloadAction());
+        goButton.addActionListener(new StartDownloadButtonListener());
         
+        //Creates the layout
+        GroupLayout layout = new GroupLayout(this.getContentPane());
+        this.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);        
         GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
         GroupLayout.SequentialGroup pGroup = layout.createSequentialGroup();
         
@@ -84,7 +84,12 @@ public class ImgurDownloaderGui extends JFrame{
         this.setVisible(true);
     }
     
-    private class FileChooser implements ActionListener{
+    /**
+     * Upon receiving an ActionEvent, prompts the user with a JFileChooser to 
+     * choose the directory to download to.
+     * Should be added to selectTargetButton
+     */
+    private class FileChooseButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Choose the target");
@@ -98,7 +103,15 @@ public class ImgurDownloaderGui extends JFrame{
         }
     }
     
-    public class StartDownloadAction implements ActionListener{
+    /**
+     * Upon receiving an ActionEvent, checks to see if the provided text is a 
+     * valid Imgur.com album link. If it is, it creates an AlbumDownloader to 
+     * download the album. Otherwise, notifies the user that the album link is 
+     * not valid.
+     * 
+     * Should be added to goButton
+     */
+    public class StartDownloadButtonListener implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
             String url = imgurLocationField.getText();
