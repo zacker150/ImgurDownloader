@@ -31,6 +31,7 @@ public class AlbumDownloader {
             Pattern.compile("(?<protocol>https?)\\:\\/\\/(www\\.)?(?:m\\.)?imgur\\.com/(a|gallery)/(?<imgurID>[a-zA-Z0-9]+)(#[0-9]+)?");
     //A regex to identify images in the HTML
     public static final Pattern IMG_REGEX = Pattern.compile("id=\"(?<link>.+?)\"");
+    public static final Pattern FILE_REGEX = Pattern.compile("http://i\\.imgur\\.com/(?<imgurID>[a-zA-Z0-9]+)(?<extension>\\.[a-zA-Z0-9]+)");
     
     private Path target;
     private String albumID;
@@ -75,12 +76,17 @@ public class AlbumDownloader {
             Scanner input = new Scanner(stream);
             while(input.hasNextLine()){
                 String next = input.nextLine();
-                if(next.contains("class=\"post-image-container")){
-                    Matcher m = IMG_REGEX.matcher(next);
-                    m.find();
-                    //System.out.println(next);
-                    String pic = "http://i.imgur.com/" + m.group("link") + ".jpg";
-                    imgLinks.add(pic);
+                Matcher m = IMG_REGEX.matcher(next);
+                if(next.contains("post-image-container") && m.find()){
+                    System.out.println(next);
+                    if(next.contains("itemtype=\"http://schema.org/ImageObject\"")){
+                        String pic = "http://i.imgur.com/" + m.group("link") + ".jpg";
+                        imgLinks.add(pic);
+                    }
+                    else if(next.contains("itemtype=\"http://schema.org/VideoObject\"")){
+                        String pic = "http://i.imgur.com/" + m.group("link") + ".mp4";
+                        imgLinks.add(pic);
+                    }
                 }
             }
             input.close();
@@ -96,19 +102,22 @@ public class AlbumDownloader {
      */
     public void downloadFiles(){
         ArrayList<String> images = getImages();
+        System.out.println(images);
         String s = target.toString();
         ExecutorService pool = Executors.newWorkStealingPool();
         int x = 1;
         for(String img: images){
             try{
-                String filename = x + ".jpg";
-                x++;
-                String path = s + "\\" + filename;
-                System.out.println(path);
-                File file = new File(path);
-                FileDownloader f = new FileDownloader(new URL(img),file);
-                pool.execute(f);
-            } catch(MalformedURLException e){
+                Matcher m = FILE_REGEX.matcher(img);
+                if(m.matches()){
+                    String filename = x + m.group("extension");
+                    String path = s + "\\" + filename;
+                    x++;
+                    File file = new File(path);
+                    FileDownloader f = new FileDownloader(new URL(img),file);
+                    pool.execute(f);
+                }
+            } catch(Exception e){
             }
         }
     }
