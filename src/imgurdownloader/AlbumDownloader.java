@@ -120,6 +120,7 @@ public class AlbumDownloader {
             } catch(Exception e){
             }
         }
+        pool.shutdown();
     }
     /**
      * Checks if a String is formatted as a link to a proper imgur album
