@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -100,7 +101,6 @@ public class AlbumDownloader {
      */
     public void downloadFiles(){
         ArrayList<String> images = getImages();
-        System.out.println(images);
         String s = target.toString();
         ExecutorService pool = Executors.newWorkStealingPool();
         int x = 1;
@@ -119,6 +119,13 @@ public class AlbumDownloader {
             }
         }
         pool.shutdown();
+        try {
+            pool.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
+            out.println("Finished Downloading all files");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AlbumDownloader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     /**
      * Checks if a String is formatted as a link to a proper imgur album
