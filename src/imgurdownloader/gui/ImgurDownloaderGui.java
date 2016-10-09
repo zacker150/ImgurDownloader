@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -109,9 +110,11 @@ public class ImgurDownloaderGui extends JFrame{
     public class StartDownloadButtonListener implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
+            TextFrame f = new TextFrame();
+            PrintStream out = new PrintStream(f.getStream());
             String url = imgurLocationField.getText();
             if(AlbumDownloader.isValidAlbumLink(url)){
-                AlbumDownloader downloader = new AlbumDownloader(url,target);
+                AlbumDownloader downloader = new AlbumDownloader(url,target,out);
                 downloader.downloadFiles();
             }
             else{
