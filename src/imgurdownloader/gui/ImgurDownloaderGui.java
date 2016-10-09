@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package imgurdownloader.gui;
 
 import imgurdownloader.AlbumDownloader;
@@ -16,8 +11,8 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 
 /**
- *
- * @author zacke
+ * The main graphical interface for the ImgurDownloader
+ * @author Victor Zeng
  */
 public class ImgurDownloaderGui extends JFrame{
     

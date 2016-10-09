@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package imgurdownloader;
 
 import java.io.File;
@@ -22,8 +18,8 @@ import java.util.regex.Pattern;
 
 /**
  * A driver class which does the work of downloading the Imgur Album. Files will
- * be named [number].[filename] when downloaded. 
- * @author zacke
+ * be named [number].[fileextension] when downloaded. 
+ * @author Victor Zeng
  */
 public class AlbumDownloader {
     //A regex to check the link is a valid album
