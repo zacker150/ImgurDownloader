@@ -4,6 +4,7 @@ package imgurdownloader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -31,15 +32,16 @@ public class AlbumDownloader {
     
     private Path target;
     private String albumID;
-    
+    private PrintStream out;
     /**
      * Constructs a new AlbumDownloader
      * @param url The url of the album to downlaod from
      * @param target The directory to place the downloaded images in.
      */
-    public AlbumDownloader(String url,Path target){
+    public AlbumDownloader(String url,Path target,PrintStream out){
         getAlbumID(url);
         this.target = target;
+        this.out = out;
     }
     
     /**
@@ -110,7 +112,7 @@ public class AlbumDownloader {
                     String path = s + "\\" + filename;
                     x++;
                     File file = new File(path);
-                    FileDownloader f = new FileDownloader(new URL(img),file);
+                    FileDownloader f = new FileDownloader(new URL(img),file,out);
                     pool.execute(f);
                 }
             } catch(Exception e){
