@@ -93,8 +93,7 @@ public class ImgurDownloaderGui extends JFrame{
             if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
                 File f = chooser.getSelectedFile();
                 target = f.toPath();
-                targetField.setText(target.toString());
-                
+                targetField.setText(target.toString());                
             }
         }
     }
@@ -121,12 +120,8 @@ public class ImgurDownloaderGui extends JFrame{
                 JOptionPane.showMessageDialog(rootPane, "That is not a valid imgur album", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
+    }  
     
-    
-    /*
-    
-    */
     public static void main(String[] args){
         ImgurDownloaderGui gui = new ImgurDownloaderGui();
     }

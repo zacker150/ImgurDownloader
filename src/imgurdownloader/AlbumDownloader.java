@@ -34,6 +34,7 @@ public class AlbumDownloader {
     private Path target;
     private String albumID;
     private PrintStream out;
+    
     /**
      * Constructs a new AlbumDownloader
      * @param url The url of the album to downlaod from
@@ -58,6 +59,7 @@ public class AlbumDownloader {
             throw new IllegalArgumentException("That is not an imgur link: " + url);
         }
     }
+    
     /**
      * Retrieves an ArrayList containing all the files in the album
      * @return 
@@ -91,11 +93,11 @@ public class AlbumDownloader {
             input.close();
         } catch (IOException ex) {
             Logger.getLogger(AlbumDownloader.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-                
+        } finally{                
         }
         return imgLinks;
     }
+    
     /**
      * Starts downloading the album
      */
