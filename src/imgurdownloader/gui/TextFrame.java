@@ -6,6 +6,7 @@
 package imgurdownloader.gui;
 
 import java.awt.Dimension;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import javax.swing.JFrame;
@@ -19,7 +20,7 @@ import javax.swing.JTextArea;
 public class TextFrame extends JFrame {
 
     private JTextArea text;
-    
+
     /**
      * The PrintStream associated with this TextFrame
      */
@@ -34,7 +35,7 @@ public class TextFrame extends JFrame {
 
     public TextFrame(String title) {
         initComponents();
-        out = new PrintStream(new JTextAreaOutputStream(text));
+        out = new PrintStream(new JTextAreaOutputStream());
         this.setTitle(title);
     }
 
@@ -44,6 +45,37 @@ public class TextFrame extends JFrame {
         text.setEditable(false);
         this.add(new JScrollPane(text));
         this.setVisible(true);
+    }
+
+    /**
+     * Wraps a JTextArea into an OutputStream
+     *
+     */
+    private class JTextAreaOutputStream extends OutputStream {
+
+        private StringBuilder buffer;
+
+        public JTextAreaOutputStream() {
+            buffer = new StringBuilder();
+        }
+
+        @Override
+        public void flush() {
+            text.append(buffer.toString());
+            buffer.setLength(0);
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            if (b == '\r') {
+                return;
+            }
+            buffer.append((char) b);
+            if (b == '\n') {
+                flush();
+            }
+        }
+
     }
 
 }
