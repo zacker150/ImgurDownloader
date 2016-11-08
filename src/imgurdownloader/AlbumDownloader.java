@@ -79,7 +79,6 @@ public class AlbumDownloader {
                 String next = input.nextLine();
                 Matcher m = IMG_REGEX.matcher(next);
                 if(next.contains("post-image-container") && m.find()){
-                    System.out.println(next);
                     if(next.contains("itemtype=\"http://schema.org/ImageObject\"")){
                         String pic = "http://i.imgur.com/" + m.group("link") + ".jpg";
                         imgLinks.add(pic);
@@ -102,6 +101,8 @@ public class AlbumDownloader {
      * Starts downloading the album
      */
     public void downloadFiles(){
+        out.println("Downloading album " + albumID);
+        System.out.println("Downloading album " + albumID);
         ArrayList<String> images = getImages();
         String s = target.toString();
         ExecutorService pool = Executors.newWorkStealingPool();

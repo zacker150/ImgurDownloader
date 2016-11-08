@@ -110,10 +110,9 @@ public class ImgurDownloaderGui extends JFrame{
         
         public void actionPerformed(ActionEvent e){
             TextFrame f = new TextFrame();
-            PrintStream out = new PrintStream(f.getStream());
             String url = imgurLocationField.getText();
             if(AlbumDownloader.isValidAlbumLink(url)){
-                AlbumDownloader downloader = new AlbumDownloader(url,target,out);
+                AlbumDownloader downloader = new AlbumDownloader(url,target,f.out);
                 downloader.downloadFiles();
             }
             else{

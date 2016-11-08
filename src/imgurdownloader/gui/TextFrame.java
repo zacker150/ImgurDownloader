@@ -7,6 +7,7 @@ package imgurdownloader.gui;
 
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -17,8 +18,12 @@ import javax.swing.JTextArea;
  */
 public class TextFrame extends JFrame {
 
-    private JTextAreaOutputStream textStream;
     private JTextArea text;
+    
+    /**
+     * The PrintStream associated with this TextFrame
+     */
+    public final PrintStream out;
 
     /**
      * Constructs a new TextFrame with title "Download Log"
@@ -29,7 +34,7 @@ public class TextFrame extends JFrame {
 
     public TextFrame(String title) {
         initComponents();
-        textStream = new JTextAreaOutputStream(text);
+        out = new PrintStream(new JTextAreaOutputStream(text));
         this.setTitle(title);
     }
 
@@ -41,12 +46,4 @@ public class TextFrame extends JFrame {
         this.setVisible(true);
     }
 
-    /**
-     * Gets the OutputStream corresponding to the JTextArea in this frame
-     *
-     * @return
-     */
-    public OutputStream getStream() {
-        return textStream;
-    }
 }
