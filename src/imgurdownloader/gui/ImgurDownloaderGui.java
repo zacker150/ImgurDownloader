@@ -111,13 +111,16 @@ public class ImgurDownloaderGui extends JFrame{
         public void actionPerformed(ActionEvent e){
             TextFrame f = new TextFrame();
             String url = imgurLocationField.getText();
-            if(AlbumDownloader.isValidAlbumLink(url)){
+            if(AlbumDownloader.isValidAlbumLink(url) && !targetField.getText().isEmpty()){
                 AlbumDownloader downloader = new AlbumDownloader(url,target,f.out);
                 Thread t = new Thread(downloader);
                 t.start();
             }
+            else if(targetField.getText().isEmpty()){
+                JOptionPane.showMessageDialog(rootPane, "Please select a target directory to download to.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             else{
-                JOptionPane.showMessageDialog(rootPane, "That is not a valid imgur album", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, "That is not a valid imgur album.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }  
