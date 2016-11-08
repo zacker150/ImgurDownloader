@@ -34,7 +34,7 @@ public class TextFrame extends JFrame {
     }
 
     private void initComponents() {
-        this.setSize(new Dimension(300, 500));
+        this.setSize(new Dimension(500, 700));
         text = new JTextArea();
         text.setEditable(false);
         this.add(new JScrollPane(text));
