@@ -21,7 +21,7 @@ public class JTextAreaOutputStream extends OutputStream{
     @Override
     public void flush(){
         text.append(buffer.toString());
-        buffer.setLength(0);
+        buffer.setLength(0);        
     }
 
     @Override
