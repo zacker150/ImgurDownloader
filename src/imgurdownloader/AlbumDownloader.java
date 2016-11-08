@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * be named [number].[fileextension] when downloaded. 
  * @author Victor Zeng
  */
-public class AlbumDownloader {
+public class AlbumDownloader implements Runnable{
     //A regex to check the link is a valid album
     public static final Pattern IMGUR_REGEX = 
             Pattern.compile("(?<protocol>https?)\\:\\/\\/(www\\.)?(?:m\\.)?imgur\\.com/(a|gallery)/(?<imgurID>[a-zA-Z0-9]+)(#[0-9]+)?");
@@ -100,7 +100,7 @@ public class AlbumDownloader {
     /**
      * Starts downloading the album
      */
-    public void downloadFiles(){
+    public void run(){
         out.println("Downloading album " + albumID);
         System.out.println("Downloading album " + albumID);
         ArrayList<String> images = getImages();

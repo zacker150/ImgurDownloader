@@ -113,7 +113,8 @@ public class ImgurDownloaderGui extends JFrame{
             String url = imgurLocationField.getText();
             if(AlbumDownloader.isValidAlbumLink(url)){
                 AlbumDownloader downloader = new AlbumDownloader(url,target,f.out);
-                downloader.downloadFiles();
+                Thread t = new Thread(downloader);
+                t.start();
             }
             else{
                 JOptionPane.showMessageDialog(rootPane, "That is not a valid imgur album", "Error", JOptionPane.ERROR_MESSAGE);
