@@ -105,6 +105,7 @@ public class AlbumDownloader implements Runnable{
         System.out.println("Downloading album " + albumID);
         ArrayList<String> images = getImages();
         String s = target.toString();
+        target.toFile().mkdirs();
         ExecutorService pool = Executors.newWorkStealingPool();
         int x = 1;
         for(String img: images){
