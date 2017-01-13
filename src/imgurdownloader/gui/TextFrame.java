@@ -43,7 +43,9 @@ public class TextFrame extends JFrame {
         this.setSize(new Dimension(500, 700));
         text = new JTextArea();
         text.setEditable(false);
-        this.add(new JScrollPane(text));
+        JScrollPane scroll = new JScrollPane(text);
+        scroll.setAutoscrolls(true);
+        this.add(scroll);
         this.setVisible(true);
     }
 
